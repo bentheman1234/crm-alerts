@@ -14,4 +14,8 @@ jobs:
           node-version: '20'
       - run: npm install -g firebase-tools
       - run: cd functions && npm install
-      - run: firebase deploy --only functions --project crm-a6dea --token "${{ secrets.FIREBASE_TOKEN }}"
+      - run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/sa.json
+          firebase deploy --only functions --project crm-a6dea
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa.json
